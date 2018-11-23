@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grayLight"
+    tools:context=".SettingActivity">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="220dp"
+        android:background="@color/Dark">
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/set_profile_image"
+            android:layout_width="164dp"
+            android:layout_height="156dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="109dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="111dp"
+            android:src="@drawable/profile"
+            app:civ_border_color="@color/grayLight"
+            app:civ_border_width="1dp" />
+
+        <EditText
+            android:id="@+id/profile_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="164dp"
+            android:layout_weight="1"
+            android:accessibilityHeading="false"
+            android:fontFamily="@font/cantata_one"
+            android:gravity="center"
+            android:text="Anonymous"
+            android:textColor="@color/grayLight"
+            android:background="@drawable/button_background"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/save_profile"
+            android:layout_width="247dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="296dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:background="@drawable/button_background"
+            android:fontFamily="serif"
+            android:text="Save"
+            android:textColor="@color/grayLight"
+            android:textSize="16sp"
+           />
+
+
+    </RelativeLayout>
+
+</LinearLayout>
