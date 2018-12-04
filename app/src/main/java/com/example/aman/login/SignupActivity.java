@@ -31,7 +31,7 @@ public class SignupActivity extends AppCompatActivity {
 
     // Sample email  is  for  custom  organization
     private final Pattern VALID_EMAIL_ADDRESS_REGEX =
-            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+            Pattern.compile("^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\\.)?[a-zA-Z]+\\.)?(gla\\.ac)\\.in$", Pattern.CASE_INSENSITIVE);
 
 
 

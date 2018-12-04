@@ -159,7 +159,7 @@ public class SettingActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
 
-                                    rootref.child("Users").child(currentUserID).child("image").setValue(uri.toString());
+                                    rootref.child("image").setValue(uri.toString());
                                     Toast.makeText(SettingActivity.this, "Image save to database ......!", Toast.LENGTH_LONG).show();
                                     loadingBar.dismiss();
                                 }
