@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileActivity">
+    <include layout="@layout/app_bar"
+        android:id="@+id/profile_activity_toolbar"></include>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_below="@+id/profile_activity_toolbar"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary" />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/visit_profile_image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/profile_activity_toolbar"
+        android:layout_marginTop="5dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/profile"
+        app:civ_border_color="@color/grayLight"
+        app:civ_border_width="1dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="User Name"
+        android:id="@+id/visit_user_name"
+        android:layout_below="@id/visit_profile_image"
+        android:layout_centerInParent="true"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp"
+        android:textAllCaps="false"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <TextView
+        android:id="@+id/visit_user_bio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/visit_user_name"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="5dp"
+        android:text="Hey there! I am using tutee"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/visit_user_name"
+        android:id="@+id/send_message_request_button"
+        android:layout_marginTop="130dp"
+        android:layout_marginLeft="65dp"
+        android:layout_marginRight="65dp"
+        android:background="@drawable/button_background"
+        android:text="Send Request"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:textSize="20sp"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/send_message_request_button"
+        android:id="@+id/decline_message_request_button"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="65dp"
+        android:layout_marginRight="65dp"
+        android:background="@drawable/button_background"
+        android:text="Cancel Request"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:visibility="invisible"/>
+
+
+
+</RelativeLayout>

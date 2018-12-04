@@ -3,33 +3,41 @@ package com.example.aman.login;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SignupActivity extends AppCompatActivity {
     private EditText UserName;
     private EditText UserEmail;
     private EditText UserPhone;
     private EditText UserPassword;
+
+    // Sample email  is  for  custom  organization
+    private final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
+
+
     private Button loginButton;
     private Button signupButton;
-    private String currentUserID;
+    private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
     private ProgressDialog loadingBar;
     private DatabaseReference rootRef;
@@ -42,7 +50,6 @@ public class SignupActivity extends AppCompatActivity {
 
         //Firebase
         mAuth = FirebaseAuth.getInstance();
-       // currentUserID=mAuth.getCurrentUser().getUid();
         rootRef=FirebaseDatabase.getInstance().getReference();
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +80,8 @@ public class SignupActivity extends AppCompatActivity {
 
     boolean isEmail(EditText text) {
         CharSequence email = text.getText().toString();
-        return (!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches());
+        Matcher matcher=VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+        return (!TextUtils.isEmpty(email) &&  matcher.find());
     }
 
     void createNewAccount() {
@@ -83,10 +91,11 @@ public class SignupActivity extends AppCompatActivity {
         final String name = UserName.getText().toString();
         final String phone = UserPhone.getText().toString();
 
-         if (TextUtils.isEmpty(name)) {
+
+         if (TextUtils.isEmpty(name) && name.endsWith(" ")) {
             UserName.setError("Enter Name");
         }
-        if (TextUtils.isEmpty(phone)) {
+        if (TextUtils.isEmpty(phone) ) {
             UserPhone.setError("Enter Mobile No.");
         }
         if (TextUtils.isEmpty(email)) {
@@ -111,26 +120,17 @@ public class SignupActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                String currenUserID=mAuth.getCurrentUser().getUid();
+                                String currentUserID=mAuth.getCurrentUser().getUid();
                                 HashMap<String,String> profileMap=new HashMap<>();
                                 //profileMap.put("uid",currentUserID);
                                 profileMap.put("name",name);
                                 profileMap.put("mobile",phone);
-                                rootRef.child("User").child(currentUserID).setValue(profileMap);
+                                profileMap.put("numberStatus","false");
+                                rootRef.child("Users").child(currentUserID).setValue(profileMap);
 
-
-
-                                //rooRef.child("User").child(currenUserID).setValue("");
-
-
-
-
-
-                                sendUserToHomeActivity();
-                                Toast.makeText(SignupActivity.this, "Account  Created Successfully", Toast.LENGTH_LONG);
-                                loadingBar.dismiss();
+                                sendVerificationEmail();
                             } else {
-
+                                    //SignUp Fail
                                 String message = task.getException().toString();
                                 Toast.makeText(SignupActivity.this, "Error : " + message, Toast.LENGTH_LONG);
                                 loadingBar.dismiss();
@@ -144,10 +144,41 @@ public class SignupActivity extends AppCompatActivity {
 
     }
 
-    private void sendUserToLoginActivity() {
-        Intent loginintent = new Intent(SignupActivity.this, Home.class);
+    private void sendVerificationEmail() {
+        currentUser=FirebaseAuth.getInstance().getCurrentUser();
+        currentUser.sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            // email sent
+                            // after email is sent just logout the user and finish this activity
+                            Toast.makeText(SignupActivity.this, "Email Sent.... \n Verify Your Email id ", Toast.LENGTH_LONG).show();
+                            FirebaseAuth.getInstance().signOut();
+                            sendUserToLoginActivity();
+                            loadingBar.dismiss();
+                            finish();
+                        }
+                        else
+                        {
+                            // email not sent, so display message and restart the activity or do whatever you wish to do
 
-        startActivity(loginintent);
+                            //restart this activity
+
+                            String message = task.getException().toString();
+                            Toast.makeText(SignupActivity.this, "Error : User Already Exist or " + message, Toast.LENGTH_LONG).show();
+                            loadingBar.dismiss();
+
+
+                        }
+                    }
+                });
+    }
+
+    private void sendUserToLoginActivity() {
+        Intent loginIntent = new Intent(SignupActivity.this, Home.class);
+
+        startActivity(loginIntent);
 
     }
 

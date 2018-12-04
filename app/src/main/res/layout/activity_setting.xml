@@ -1,65 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grayLight"
+    android:background="@color/Dark"
     tools:context=".SettingActivity">
 
-    <RelativeLayout
+    <include layout="@layout/app_bar"
+        android:id="@+id/setting_toolbar"></include>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_below="@+id/setting_toolbar"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary" />
+
+
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/set_profile_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/setting_toolbar"
+        android:src="@drawable/profile"
+        app:civ_border_color="@color/grayLight"
+        app:civ_border_width="1dp" />
+
+    <EditText
+        android:id="@+id/profile_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:accessibilityHeading="false"
+        android:fontFamily="@font/cantata_one"
+        android:layout_below="@id/set_profile_image"
+        android:gravity="center"
+        android:hint="User Name"
+        android:textColor="@color/grayLight"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:maxLength="20"
+        android:background="@color/Dark"
+        android:elevation="20dp"/>
+
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="220dp"
-        android:background="@color/Dark">
+        android:layout_height="wrap_content"
+        android:id="@+id/bio_status"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="Bio :- "
+        android:fontFamily="@font/cantata_one"
+        android:textColor="@color/grayLight"
+        android:layout_below="@id/profile_user_name"
+        android:textSize="13dp"
+        android:textStyle="bold"
+        />
+    <EditText
+        android:id="@+id/profile_user_bio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="15dp"
+        android:padding="10dp"
+        android:accessibilityHeading="false"
+        android:fontFamily="@font/cantata_one"
+        android:layout_below="@id/bio_status"
+        android:gravity="center"
+        android:text="Hey there! I am using tutee"
+        android:textColor="@color/grayLight"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:background="@color/Dark"
+        android:elevation="20dp"
+        android:maxLength="100"/>
 
-        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/set_profile_image"
-            android:layout_width="164dp"
-            android:layout_height="156dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="109dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginEnd="111dp"
-            android:src="@drawable/profile"
-            app:civ_border_color="@color/grayLight"
-            app:civ_border_width="1dp" />
+    <Button
+        android:id="@+id/save_profile"
+        android:layout_width="247dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="296dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="0dp"
+        android:background="@drawable/button_background"
+        android:fontFamily="serif"
+        android:text="Save"
+        android:textColor="@color/grayLight"
+        android:textSize="16sp" />
 
-        <EditText
-            android:id="@+id/profile_user_name"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="164dp"
-            android:layout_weight="1"
-            android:accessibilityHeading="false"
-            android:fontFamily="@font/cantata_one"
-            android:gravity="center"
-            android:text="Anonymous"
-            android:textColor="@color/grayLight"
-            android:background="@drawable/button_background"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+    <Button
+        android:id="@+id/number_Verification"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/verification_need"
+        android:fontFamily="@font/cantata_one"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:text="Phone Number Not Verified"
+        android:textColor="@color/grayLight"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:visibility="invisible"/>
 
-        <Button
-            android:id="@+id/save_profile"
-            android:layout_width="247dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="296dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            android:background="@drawable/button_background"
-            android:fontFamily="serif"
-            android:text="Save"
-            android:textColor="@color/grayLight"
-            android:textSize="16sp"
-           />
-
-
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>

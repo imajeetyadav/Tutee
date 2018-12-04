@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Dark">
+
+
+    <TextView
+        android:id="@+id/phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="150dp"
+        android:layout_weight="1"
+        android:accessibilityHeading="false"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/cantata_one"
+        android:gravity="center"
+        android:text="Number"
+        android:textColor="@color/grayLight"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/number_Verification"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="210dp"
+        android:layout_weight="1"
+        android:accessibilityHeading="false"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/cantata_one"
+        android:gravity="center"
+        android:hint="Please Enter  Verification Code"
+        android:textColor="@color/grayLight"
+        android:textColorHint="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="15sp"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/send_verifiction_code"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="280dp"
+        android:layout_weight="1"
+        android:background="@drawable/verification_need"
+        android:fontFamily="@font/cantata_one"
+        android:gravity="center"
+        android:text="Send verfication Code"
+        android:textColor="@color/grayLight"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/verify"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="350dp"
+        android:layout_weight="1"
+        android:background="@drawable/verification_need"
+        android:gravity="center"
+        android:text="Verify"
+        android:textColor="@color/grayLight"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="invisible"/>
+
+
+</RelativeLayout>
