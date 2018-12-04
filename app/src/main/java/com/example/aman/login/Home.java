@@ -18,6 +18,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+
 public class Home extends AppCompatActivity {
 
     private androidx.appcompat.widget.Toolbar mToolbar;
@@ -25,9 +29,9 @@ public class Home extends AppCompatActivity {
     private TabLayout myTabLayout;
     private TabsAccessorAdapter myTabsAccessorAdapter;
 
-    private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
     private DatabaseReference rootref;
+    private String currentUserID;
 
 
     @Override
@@ -38,7 +42,7 @@ public class Home extends AppCompatActivity {
         //Check internet connection
 
         mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
+
         rootref = FirebaseDatabase.getInstance().getReference();
 
         mToolbar = findViewById(R.id.main_app_toolbar);
@@ -60,11 +64,32 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        FirebaseUser currentUser=mAuth.getCurrentUser();
         if (currentUser == null) {
             sendUserToLoginActivity();
         }
+        else{
+            updateUsersStatus("online");
+        }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FirebaseUser currentUser=mAuth.getCurrentUser();
+        if (currentUser!=null){
+            updateUsersStatus("offline");
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FirebaseUser currentUser=mAuth.getCurrentUser();
+        if (currentUser !=null){
+            updateUsersStatus("offline");
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -79,6 +104,7 @@ public class Home extends AppCompatActivity {
         super.onOptionsItemSelected(item);
 
         if (item.getItemId() == R.id.main_lagout) {
+            updateUsersStatus("offline");
             mAuth.signOut();
             sendUserToLoginActivity();
         }
@@ -127,6 +153,30 @@ public class Home extends AppCompatActivity {
     private void sendUserToFindFriend() {
         Intent findFriendIntent = new Intent(Home.this, FindFriendActivity.class);
         startActivity(findFriendIntent);
+    }
+
+    private void updateUsersStatus(String state){
+
+        String saveCurrentDate,saveCurrentTime;
+
+
+        Calendar calForDate=Calendar.getInstance();
+        SimpleDateFormat currentDateFormat=new SimpleDateFormat("dd MMM, yyyy");
+        saveCurrentDate=currentDateFormat.format(calForDate.getTime());
+
+        Calendar calForTime=Calendar.getInstance();
+        SimpleDateFormat currentTimeFormat=new SimpleDateFormat("hh:mm a");
+        saveCurrentTime=currentTimeFormat.format(calForTime.getTime());
+
+        HashMap<String,Object> onlineStateMap=new HashMap<>();
+        onlineStateMap.put("time",saveCurrentTime);
+        onlineStateMap.put("date",saveCurrentDate);
+        onlineStateMap.put("state",state);
+
+        currentUserID=mAuth.getCurrentUser().getUid();
+        rootref.child("Users").child(currentUserID).child("userState")
+                .updateChildren(onlineStateMap);
+
     }
 
 }

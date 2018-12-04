@@ -20,6 +20,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+
 public class ProfileActivity extends AppCompatActivity {
     private String receiverUserId, senderUserID, current_State;
 
@@ -27,7 +29,7 @@ public class ProfileActivity extends AppCompatActivity {
     private CircleImageView userProfileImage;
     private TextView userProfileName,userProfileBio;
     private Button sendMessageRequestButton, declineMessageChatRequest;
-    private DatabaseReference userRef, chatRequestRef, contactsRef;
+    private DatabaseReference userRef, chatRequestRef, contactsRef,notificationRef;
     private FirebaseAuth mAuth;
 
     @Override
@@ -63,6 +65,7 @@ public class ProfileActivity extends AppCompatActivity {
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
         chatRequestRef = FirebaseDatabase.getInstance().getReference().child("Chat Requests");
         contactsRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
+        notificationRef = FirebaseDatabase.getInstance().getReference().child("Notifications");
 
         senderUserID = mAuth.getCurrentUser().getUid();
 
@@ -165,7 +168,7 @@ public class ProfileActivity extends AppCompatActivity {
                         AcceptChatRequest();
                     }
                     if (current_State.equals("friends")) {
-                        RemoveSpeciicContacts();
+                        RemoveSpecificContacts();
                     }
                 }
             });
@@ -176,7 +179,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-    private void RemoveSpeciicContacts() {
+    private void RemoveSpecificContacts() {
 
         contactsRef.child(senderUserID).child(receiverUserId)
                 .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -266,9 +269,29 @@ public class ProfileActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
+                                       /* HashMap<String,String> chatNotificationMap=new HashMap<>();
+                                        chatNotificationMap.put("from",senderUserID);
+                                        chatNotificationMap.put("type","request");
+
+                                        notificationRef.child(receiverUserId).push()
+                                                .setValue(chatNotificationMap)
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()){
+                                                            sendMessageRequestButton.setEnabled(true);
+                                                            current_State = "request_sent";
+                                                            sendMessageRequestButton.setText("Cancel Request ");
+
+                                                        }
+
+                                                    }
+                                                });*/
+
                                         sendMessageRequestButton.setEnabled(true);
                                         current_State = "request_sent";
                                         sendMessageRequestButton.setText("Cancel Request ");
+
                                     }
 
                                 }
@@ -291,8 +314,6 @@ public class ProfileActivity extends AppCompatActivity {
                             sendMessageRequestButton.setEnabled(true);
                             current_State = "new";
                             sendMessageRequestButton.setText("Send Request");
-
-
                             declineMessageChatRequest.setVisibility(View.INVISIBLE);
                             declineMessageChatRequest.setEnabled(false);
 

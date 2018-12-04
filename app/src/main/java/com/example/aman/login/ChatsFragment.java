@@ -113,10 +113,24 @@ public class ChatsFragment extends Fragment {
                                     final String retName = dataSnapshot.child("name").getValue().toString();
                                     chatViewHolder.userName.setText(retName);
 
-                                    if (dataSnapshot.hasChild("last seen")) {
-                                        final String retLastSeen = dataSnapshot.child("last seen").getValue().toString();
-                                        // chatViewHolder.lastSeen.setText(retLastSeen);
-                                        chatViewHolder.lastSeen.setText("Last Seen :-" + retLastSeen + " ago");
+
+                                    //last Seen is INVISIBLE
+
+                                    if (dataSnapshot.child("userState").hasChild("state")) {
+                                        String state = dataSnapshot.child("userState").child("state").getValue().toString();
+                                        String date = dataSnapshot.child("userState").child("date").getValue().toString();
+                                        String time = dataSnapshot.child("userState").child("time").getValue().toString();
+                                        if (state.equals("online")){
+                                            chatViewHolder.lastSeen.setText("online");
+                                        }
+                                        else if (state.equals("offline")){
+                                            chatViewHolder.lastSeen.setText("Last Seen : "  + date+" "+time);
+
+                                        }
+
+                                    }
+                                    else {
+                                        chatViewHolder.lastSeen.setText("offline");
                                     }
 
                                     chatViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +146,7 @@ public class ChatsFragment extends Fragment {
                                     chatViewHolder.profileImage.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            Intent imageViewIntent=new Intent(getContext(),TuteeImageView.class);
+                                            Intent imageViewIntent = new Intent(getContext(), TuteeImageView.class);
                                             imageViewIntent.putExtra("visit_user_image", retImage[0]);
                                             startActivity(imageViewIntent);
 

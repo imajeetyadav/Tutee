@@ -18,6 +18,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     private FirebaseAuth mAuth;
+    private DatabaseReference usersRef;
     private ProgressDialog loadingBar;
 
 
@@ -43,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 
         InitializeFields();
         mAuth = FirebaseAuth.getInstance();
+        usersRef=FirebaseDatabase.getInstance().getReference().child("Users");
 
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,33 +91,14 @@ public class LoginActivity extends AppCompatActivity {
             loadingBar.setCanceledOnTouchOutside(true);
             loadingBar.show();
 
-        /*    mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
 
-                                sendUserToHomeActivity();
-                                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG);
-                                loadingBar.dismiss();
-
-                            } else {
-
-                                String message = task.getException().toString();
-                                loadingBar.dismiss();
-                                Toast.makeText(LoginActivity.this, "Error : " + message, Toast.LENGTH_LONG);
-                                UserEmail.setError("Enter valid Email!");
-                                UserPassword.setError("Enter valid Password");
-
-
-                            }
-                        }
-                    });*/
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+
+
                                 checkIfEmailVerified();
 
                             } else {
@@ -159,11 +145,32 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user.isEmailVerified()) {
+
+         /*   String currentUserId=mAuth.getCurrentUser().getUid();
+            String deviceToken =FirebaseInstanceId.getInstance().getToken();
+            usersRef.child(currentUserId).child("device_token").
+                    setValue(deviceToken).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()){
+                        // user is verified
+                        sendUserToHomeActivity();
+                        loadingBar.dismiss();
+                        finish();
+                        Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                }
+            }); */
+
+
             // user is verified
             sendUserToHomeActivity();
             loadingBar.dismiss();
             finish();
             Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
+
         } else {
             // email is not verified, so just prompt the message to the user and restart this activity.
             Toast.makeText(LoginActivity.this, "Email Id Not verified", Toast.LENGTH_SHORT).show();

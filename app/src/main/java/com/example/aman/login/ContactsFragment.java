@@ -2,6 +2,7 @@ package com.example.aman.login;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -97,23 +98,45 @@ public class ContactsFragment extends Fragment {
                 userRef.child(userID).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.hasChild("image")){
-                            String profilePhoto=dataSnapshot.child("image").getValue().toString();
-                            Picasso.get().load(profilePhoto).placeholder(R.drawable.profile).into(contactsViewHolder.profileImage);
+                        if (dataSnapshot.exists()) {
 
-                        }
-                            String profileName=dataSnapshot.child("name").getValue().toString();
+                            if (dataSnapshot.child("userState").hasChild("state")) {
+                                String state = dataSnapshot.child("userState").child("state").getValue().toString();
+                                String date = dataSnapshot.child("userState").child("date").getValue().toString();
+                                String time = dataSnapshot.child("userState").child("time").getValue().toString();
+                                if (state.equals("online")){
+                                   contactsViewHolder.lastSeen.setText("online");
+                                   contactsViewHolder.lastSeen.setTextColor(Color.GREEN);
+                                }
+                                else if (state.equals("offline")){
+                                    contactsViewHolder.lastSeen.setText("Last Seen : "  + date+" "+time);
+                                }
+
+                            }
+                            else {
+                                contactsViewHolder.lastSeen.setText("offline");
+                            }
+
+
+                            if (dataSnapshot.hasChild("image")) {
+                                String profilePhoto = dataSnapshot.child("image").getValue().toString();
+                                Picasso.get().load(profilePhoto).placeholder(R.drawable.profile).into(contactsViewHolder.profileImage);
+
+                            }
+                            String profileName = dataSnapshot.child("name").getValue().toString();
 
                             contactsViewHolder.userName.setText(profileName);
                             contactsViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    String user_id =getRef(position).getKey();
-                                    Intent ProfileIntent=new Intent(getContext(),ProfileActivity.class);
-                                    ProfileIntent.putExtra("visit_user_id",user_id);
+                                    String user_id = getRef(position).getKey();
+                                    Intent ProfileIntent = new Intent(getContext(), ProfileActivity.class);
+                                    ProfileIntent.putExtra("visit_user_id", user_id);
                                     startActivity(ProfileIntent);
                                 }
                             });
+
+                        }
 
                     }
 
