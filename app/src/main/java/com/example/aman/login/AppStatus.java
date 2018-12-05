@@ -24,8 +24,7 @@ public class AppStatus {
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
 
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-            connected = networkInfo != null && networkInfo.isAvailable() &&
-                    networkInfo.isConnected();
+            connected = networkInfo != null && networkInfo.isConnected();
             return connected;
 
 

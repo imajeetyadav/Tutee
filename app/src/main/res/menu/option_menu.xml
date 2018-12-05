@@ -7,10 +7,6 @@
         android:title="Find Friends"
         app:showAsAction="never"></item>
     <item
-        android:id="@+id/main_create_group"
-        android:title="Create Group"
-        app:showAsAction="never"></item>
-    <item
         android:id="@+id/main_settings"
         android:title="Setting"
         app:showAsAction="never">
@@ -19,6 +15,12 @@
     <item
         android:id="@+id/main_lagout"
         android:title="Logout"
+        app:showAsAction="never">
+
+    </item>
+    <item
+        android:id="@+id/about_us"
+        android:title="About App"
         app:showAsAction="never">
 
     </item>

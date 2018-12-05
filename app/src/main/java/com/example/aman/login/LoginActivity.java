@@ -1,17 +1,16 @@
 package com.example.aman.login;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,6 +18,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -26,10 +31,12 @@ public class LoginActivity extends AppCompatActivity {
     private EditText UserPassword;
     private Button Login;
     private Button Signup;
+    private final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\\.)?[a-zA-Z]+\\.)?(gla\\.ac)\\.in$", Pattern.CASE_INSENSITIVE);
 
     private FirebaseAuth mAuth;
+    private DatabaseReference usersRef;
     private ProgressDialog loadingBar;
-
 
 
     @Override
@@ -40,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 
         InitializeFields();
         mAuth = FirebaseAuth.getInstance();
+        usersRef=FirebaseDatabase.getInstance().getReference().child("Users");
 
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +69,8 @@ public class LoginActivity extends AppCompatActivity {
 
     boolean isEmail(EditText text) {
         CharSequence email = text.getText().toString();
-        return (!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches());
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+        return (!TextUtils.isEmpty(email) && matcher.find());
     }
 
 
@@ -82,15 +91,15 @@ public class LoginActivity extends AppCompatActivity {
             loadingBar.setCanceledOnTouchOutside(true);
             loadingBar.show();
 
+
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
 
-                                sendUserToHomeActivity();
-                                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG);
-                                loadingBar.dismiss();
+
+                                checkIfEmailVerified();
 
                             } else {
 
@@ -104,7 +113,6 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }
                     });
-
         }
 
     }
@@ -131,6 +139,47 @@ public class LoginActivity extends AppCompatActivity {
         mainintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainintent);
         finish();
+    }
+
+    private void checkIfEmailVerified() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user.isEmailVerified()) {
+
+         /*   String currentUserId=mAuth.getCurrentUser().getUid();
+            String deviceToken =FirebaseInstanceId.getInstance().getToken();
+            usersRef.child(currentUserId).child("device_token").
+                    setValue(deviceToken).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()){
+                        // user is verified
+                        sendUserToHomeActivity();
+                        loadingBar.dismiss();
+                        finish();
+                        Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                }
+            }); */
+
+
+            // user is verified
+            sendUserToHomeActivity();
+            loadingBar.dismiss();
+            finish();
+            Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
+
+        } else {
+            // email is not verified, so just prompt the message to the user and restart this activity.
+            Toast.makeText(LoginActivity.this, "Email Id Not verified", Toast.LENGTH_SHORT).show();
+            loadingBar.dismiss();
+            FirebaseAuth.getInstance().signOut();
+
+            //restart this activity
+
+        }
     }
 
 

@@ -4,27 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GroupChatActivity">
-
+    tools:context=".ChatActivity"
+    android:background="@color/Dark">
     <include
-        android:id="@+id/group_chat_bar_layout"
+        android:id="@+id/chat_bar_layout"
         layout="@layout/app_bar">
-
     </include>
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/group_chat_recycle_list"
+        android:id="@+id/private_message_list_of_users"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/group_chat_bar_layout"
-        android:layout_above="@id/myLinearLayout"
-        />
-
-
-
+        android:layout_below="@+id/chat_bar_layout"
+        android:layout_above="@+id/myLinearLayout"/>
     <LinearLayout
         android:id="@+id/myLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="3dp" 
         android:background="#ffffff"
         android:layout_alignParentBottom="true"
         app:layout_constraintRight_toRightOf="parent"
@@ -63,7 +60,6 @@
 
 
     </LinearLayout>
-
 
 
 </RelativeLayout>

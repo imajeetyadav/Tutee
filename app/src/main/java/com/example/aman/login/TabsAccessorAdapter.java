@@ -1,13 +1,9 @@
 package com.example.aman.login;
 
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-
-import com.example.aman.login.Chats;
-import com.example.aman.login.Group;
-import com.example.aman.login.Notics;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 public class TabsAccessorAdapter extends FragmentPagerAdapter {
     public TabsAccessorAdapter(FragmentManager fm) {
@@ -18,14 +14,14 @@ public class TabsAccessorAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int i) {
         switch (i) {
             case 0:
-                Chats chats = new Chats();
+                ChatsFragment chats = new ChatsFragment();
                 return chats;
             case 1:
-                Group group = new Group();
+                GroupFragment group = new GroupFragment();
                 return group;
             case 2:
-                Notics notics = new Notics();
-                return notics;
+                ContactsFragment feeds = new ContactsFragment();
+                return feeds;
             default:
                 return null;
         }
@@ -44,9 +40,9 @@ public class TabsAccessorAdapter extends FragmentPagerAdapter {
             case 0:
                 return "Chats";
             case 1:
-                return "Group";
+                return "Discussion";
             case 2:
-                return "Notics";
+                return "Friends";
             default:
                 return null;
         }
