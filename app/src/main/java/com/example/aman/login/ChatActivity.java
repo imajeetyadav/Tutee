@@ -114,6 +114,7 @@ public class ChatActivity extends AppCompatActivity {
         messageAdapter=new MessageAdapter(messagesList);
         userMessagesList=(RecyclerView)findViewById(R.id.private_message_list_of_users);
         linearLayoutManager=new LinearLayoutManager(this);
+        userMessagesList.setHasFixedSize(true);
         userMessagesList.setLayoutManager(linearLayoutManager);
         userMessagesList.setAdapter(messageAdapter);
         DisplayLastSeen();
