@@ -60,8 +60,11 @@
         <activity
             android:name=".ChatActivity"
             android:parentActivityName=".Home" />
-        <activity android:name=".TuteeImageView"
-            android:parentActivityName=".Home"/>
+        <activity
+            android:name=".TuteeImageView"
+            android:parentActivityName=".Home" />
+        <activity android:name=".QueryChatActivity"
+            ></activity>
     </application>
 
 </manifest>

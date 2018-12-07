@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,10 +42,11 @@ public class GroupFragment extends Fragment {
     private ListView list_view;
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> list_of_groups=new ArrayList<>();
-    private DatabaseReference GroupRef;
+    private DatabaseReference GroupRef,AdminGroupRef;
     private DatabaseReference rootRef;
+    private FirebaseAuth mAuth;
     private FloatingActionButton createNewGroup;
-
+    private String currentUserID;
 
     public GroupFragment() {
         // Required empty public constructor
@@ -55,10 +57,14 @@ public class GroupFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        mAuth=FirebaseAuth.getInstance();
+        currentUserID =mAuth.getCurrentUser().getUid();
         groupFragmentView=inflater.inflate(R.layout.fragment_group, container, false);
-        GroupRef=FirebaseDatabase.getInstance().getReference().child("Groups");
-        GroupRef.keepSynced(true);
         rootRef=FirebaseDatabase.getInstance().getReference();
+        GroupRef=FirebaseDatabase.getInstance().getReference().child("Groups");
+        AdminGroupRef=FirebaseDatabase.getInstance().getReference().child("Group Admins");
+        GroupRef.keepSynced(true);
+
 
 
         IntializeFields();
@@ -156,9 +162,6 @@ public class GroupFragment extends Fragment {
             public void onClick(DialogInterface dialogInterface, int which) {
 
                 dialogInterface.cancel();
-
-
-
             }
         });
 
@@ -182,13 +185,14 @@ public class GroupFragment extends Fragment {
 
 
  private void createNewGroup(final String groupName){
-     DatabaseReference userNameRef = rootRef.child("Groups").child(groupName);
+     final DatabaseReference userNameRef = rootRef.child("Groups").child(groupName);
      ValueEventListener eventListener = new ValueEventListener() {
          @Override
          public void onDataChange(DataSnapshot dataSnapshot) {
              if(!dataSnapshot.exists()) {
                  //create new user
                  rootRef.child("Groups").child(groupName).setValue("");
+                 AdminGroupRef.child(groupName).setValue(currentUserID);
              }
              else{
                  Toast.makeText(getContext(),"Error Topic Already Exist",Toast.LENGTH_LONG).show();
