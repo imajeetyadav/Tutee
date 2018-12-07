@@ -33,6 +33,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
+/*Date :-  7 dec 2018
+by Ak47*/
+
 public class QueryChatActivity extends AppCompatActivity {
     private Toolbar mtoolbar;
     private ImageButton SendMessageButton;

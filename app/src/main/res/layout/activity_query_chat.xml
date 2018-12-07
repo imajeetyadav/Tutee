@@ -6,6 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".QueryChatActivity">
 
+   <!-- /*Date :-  7 dec 2018
+    by Ak47*/-->
+
     <include
         android:id="@+id/query_chat_bar_layout"
         layout="@layout/app_bar">
