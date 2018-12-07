@@ -39,6 +39,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+/* updated on
+Date :-  7 dec 2018
+by Ak47*/
+
 public class GroupChatActivity extends AppCompatActivity {
 
     private Toolbar mtoolbar;
