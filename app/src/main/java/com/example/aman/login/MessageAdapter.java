@@ -56,6 +56,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
+
+        holder.setIsRecyclable(true);
         String messageSenderId = mAuth.getCurrentUser().getUid();
         Messages messages = userMessagesList.get(position);
       //  Log.d("after uid", messages.toString());
