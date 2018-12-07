@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.aman.login">
 
+    <!--Updated on 7 dec 2018-->
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -60,8 +62,11 @@
         <activity
             android:name=".ChatActivity"
             android:parentActivityName=".Home" />
-        <activity android:name=".TuteeImageView"
-            android:parentActivityName=".Home"/>
+        <activity
+            android:name=".TuteeImageView"
+            android:parentActivityName=".Home" />
+        <activity android:name=".QueryChatActivity"
+            ></activity>
     </application>
 
 </manifest>

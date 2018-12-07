@@ -3,6 +3,8 @@ package com.example.aman.login;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -37,6 +39,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+/* updated on
+Date :-  7 dec 2018
+by Ak47*/
+
 public class GroupChatActivity extends AppCompatActivity {
 
     private Toolbar mtoolbar;
@@ -51,7 +57,7 @@ public class GroupChatActivity extends AppCompatActivity {
     private String currentTime;
     private FirebaseAuth mAuth;
     private DatabaseReference usersRef,groupNameRef,groupMessageKeyRef;
-    private final List<Groups> groupMessagesList=new ArrayList<>();
+    /*private final List<Groups> groupMessagesList=new ArrayList<>();*/
 
 
 
@@ -100,7 +106,7 @@ public class GroupChatActivity extends AppCompatActivity {
         final FirebaseRecyclerAdapter<Groups,GroupChatViewHolder> adapter
                 =new FirebaseRecyclerAdapter<Groups, GroupChatViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull GroupChatViewHolder groupChatViewHolder, int i, @NonNull Groups groups) {
+            protected void onBindViewHolder(@NonNull GroupChatViewHolder groupChatViewHolder, final int position, @NonNull final Groups groups) {
 
                 groupChatViewHolder.setIsRecyclable(false);
 
@@ -152,6 +158,23 @@ public class GroupChatActivity extends AppCompatActivity {
                         groupChatViewHolder.messageTime.setText(groups.getTime()+" "+groups.getDate());
                     }
                 }
+
+                groupChatViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent QueryActivity=new Intent(GroupChatActivity.this,QueryChatActivity.class);
+                        QueryActivity.putExtra("query",groups.getMessage());
+                        QueryActivity.putExtra("groupName",currentGroupName);
+                        QueryActivity.putExtra("pushKey",getRef(position).getKey());
+                        startActivity(QueryActivity);
+                    }
+                });
+
+
+
+
+
+
                        // groupMessagesList.add(groups);
                       //  GroupChatRecyclerList.smoothScrollToPosition(GroupChatRecyclerList.getAdapter().getItemCount());
 
@@ -202,11 +225,6 @@ public class GroupChatActivity extends AppCompatActivity {
 
         SendMessageButton=findViewById(R.id.send_message_button);
         userMessageInput=findViewById(R.id.input_group_message);
-/*        displayChatName=findViewById(R.id.group_chat_name_display);
-        displayChatMessage=findViewById(R.id.group_chat_message_display);
-        displayChatDateTime=findViewById(R.id.group_chat_Date_display);
-        // displayChatTime=findViewById(R.id.group_chat_time_display);
-        mScrollView=findViewById(R.id.my_scroll_view);*/
 
     }
 
@@ -259,7 +277,9 @@ public class GroupChatActivity extends AppCompatActivity {
             messageInfoMap.put("message",message);
             messageInfoMap.put("date",currentDate);
             messageInfoMap.put("time",currentTime);
+            messageInfoMap.put("Query","");
             groupMessageKeyRef.updateChildren(messageInfoMap);
+
 
 
 

@@ -254,4 +254,16 @@ public class ChatActivity extends AppCompatActivity {
 
 
     }
+
+ /*   @Override
+    protected void onRestart() {
+        super.onRestart();
+        messagesList.clear();
+    }*/
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        messagesList.clear();
+    }
 }
