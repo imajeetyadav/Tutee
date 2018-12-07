@@ -166,18 +166,6 @@ public class GroupFragment extends Fragment {
 
     }
 
- /*   private void createNewGroup(final String groupName) {
-        rootRef.child("Groups").child(groupName).setValue("")
-                .addOnCompleteListener(new OnCompleteListener<Void>(){
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-
-                        if(task.isSuccessful()){
-                            Toast.makeText(getContext(),groupName+ " GroupFragment is  Created",Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-    }*/
 
 
 
