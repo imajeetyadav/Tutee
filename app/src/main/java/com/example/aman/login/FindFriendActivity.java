@@ -32,6 +32,7 @@ public class FindFriendActivity extends AppCompatActivity {
         setContentView(R.layout.activity_find_friend);
 
         userRef=FirebaseDatabase.getInstance().getReference().child("Users");
+        userRef.child("name").keepSynced(true);
 
         FindFriendRecyclerList = (RecyclerView) findViewById(R.id.find_friend_recycler_list);
         FindFriendRecyclerList.setLayoutManager(new LinearLayoutManager(this));

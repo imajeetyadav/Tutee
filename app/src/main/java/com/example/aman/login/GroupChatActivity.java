@@ -73,6 +73,7 @@ public class GroupChatActivity extends AppCompatActivity {
 
         usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
         groupNameRef=FirebaseDatabase.getInstance().getReference().child("Groups").child(currentGroupName);
+        groupNameRef.keepSynced(true);
         GroupChatRecyclerList = (RecyclerView) findViewById(R.id.group_chat_recycle_list);
         GroupChatRecyclerList.setLayoutManager(new LinearLayoutManager(this));
 

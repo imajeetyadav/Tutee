@@ -40,7 +40,7 @@
         android:fontFamily="@font/cantata_one"
         android:layout_below="@id/main_app_logo"
         android:gravity="center"
-        android:text="Version 1.0"
+        android:text="Version 1.0 beta"
         android:textColor="@color/grayLight"
         android:textSize="20sp"
         android:textStyle="bold"

@@ -110,6 +110,7 @@ public class ChatActivity extends AppCompatActivity {
         senderUserID=mAuth.getCurrentUser().getUid();
 
         rootRef=FirebaseDatabase.getInstance().getReference();
+        rootRef.child("Message").child(senderUserID).keepSynced(true);
 
         messageAdapter=new MessageAdapter(messagesList);
         userMessagesList=(RecyclerView)findViewById(R.id.private_message_list_of_users);

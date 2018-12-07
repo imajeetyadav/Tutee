@@ -65,7 +65,7 @@ public class ProfileActivity extends AppCompatActivity {
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
         chatRequestRef = FirebaseDatabase.getInstance().getReference().child("Chat Requests");
         contactsRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
-        notificationRef = FirebaseDatabase.getInstance().getReference().child("Notifications");
+      //  notificationRef = FirebaseDatabase.getInstance().getReference().child("Notifications");
 
         senderUserID = mAuth.getCurrentUser().getUid();
 
