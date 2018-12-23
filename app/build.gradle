@@ -4,7 +4,8 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.example.aman.login"
+        applicationId "com.tutee.ak47.app" +
+                ""
         minSdkVersion 25
         targetSdkVersion 28
         versionCode 1
