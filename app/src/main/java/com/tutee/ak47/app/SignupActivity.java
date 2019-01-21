@@ -120,6 +120,7 @@ public class SignupActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+                                sendVerificationEmail();
                                 String currentUserID=mAuth.getCurrentUser().getUid();
                                 HashMap<String,String> profileMap=new HashMap<>();
                                 //profileMap.put("uid",currentUserID);
@@ -128,11 +129,11 @@ public class SignupActivity extends AppCompatActivity {
                                 profileMap.put("numberStatus","false");
                                 rootRef.child("Users").child(currentUserID).setValue(profileMap);
 
-                                sendVerificationEmail();
+
                             } else {
                                     //SignUp Fail
                                 String message = task.getException().toString();
-                                Toast.makeText(SignupActivity.this, "Error : " + message, Toast.LENGTH_LONG);
+                                Toast.makeText(SignupActivity.this, "Error : " + message, Toast.LENGTH_LONG).show();
                                 loadingBar.dismiss();
 
                             }
