@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ContactsFragment"
-    android:background="@color/Dark">
+    android:background="@color/colorPrimaryDark">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/contacts_recycler_list"

@@ -13,13 +13,11 @@ public class TabsAccessorAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int i) {
         switch (i) {
+
             case 0:
-                ChatsFragment chats = new ChatsFragment();
-                return chats;
-            case 1:
                 GroupFragment group = new GroupFragment();
                 return group;
-            case 2:
+            case 1:
                 ContactsFragment feeds = new ContactsFragment();
                 return feeds;
             default:
@@ -30,7 +28,7 @@ public class TabsAccessorAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 
     @Nullable
@@ -38,11 +36,9 @@ public class TabsAccessorAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "Chats";
-            case 1:
                 return "Discussion";
-            case 2:
-                return "Friends";
+            case 1:
+                return "Chats";
             default:
                 return null;
         }

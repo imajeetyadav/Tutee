@@ -25,6 +25,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 
@@ -91,13 +93,32 @@ public class ContactsFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull final ContactsViewHolder contactsViewHolder, final int position, @NonNull Contacts contacts) {
 
-                String userID=getRef(position).getKey();
+                final String userID=getRef(position).getKey();
+                final String[] retImage = {"default_image"};
                 contactsViewHolder.lastSeen.setVisibility(View.VISIBLE);
 
                 userRef.child(userID).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
+
+                            if (dataSnapshot.hasChild("image")) {
+                                retImage[0] = dataSnapshot.child("image").getValue().toString();
+                                Picasso.get().load(retImage[0]).networkPolicy(NetworkPolicy.OFFLINE)
+                                        .placeholder(com.tutee.ak47.app.R.drawable.profile).into(contactsViewHolder.profileImage, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+
+                                    }
+
+                                    @Override
+                                    public void onError(Exception e) {
+                                        Picasso.get().load(retImage[0]).placeholder(com.tutee.ak47.app.R.drawable.profile).into(contactsViewHolder.profileImage);
+
+                                    }
+                                });
+
+                            }
 
                             if (dataSnapshot.child("userState").hasChild("state")) {
                                 String state = dataSnapshot.child("userState").child("state").getValue().toString();
@@ -117,21 +138,38 @@ public class ContactsFragment extends Fragment {
                             }
 
 
-                            if (dataSnapshot.hasChild("image")) {
+                           /* if (dataSnapshot.hasChild("image")) {
                                 String profilePhoto = dataSnapshot.child("image").getValue().toString();
                                 Picasso.get().load(profilePhoto).placeholder(com.tutee.ak47.app.R.drawable.profile).into(contactsViewHolder.profileImage);
 
                             }
-                            String profileName = dataSnapshot.child("name").getValue().toString();
+                            String profileName = dataSnapshot.child("name").getValue().toString();*/
+                            final String retName = dataSnapshot.child("name").getValue().toString();
+                            contactsViewHolder.userName.setText(retName);
 
-                            contactsViewHolder.userName.setText(profileName);
+                         //   contactsViewHolder.userName.setText(profileName);
                             contactsViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     String user_id = getRef(position).getKey();
-                                    Intent ProfileIntent = new Intent(getContext(), ProfileActivity.class);
+                                    Intent chatIntent = new Intent(getContext(), ChatActivity.class);
+                                    chatIntent.putExtra("visit_user_id", userID);
+                                    chatIntent.putExtra("visit_user_name", retName);
+                                    chatIntent.putExtra("visit_user_image", retImage[0]);
+                                    startActivity(chatIntent);
+                                  /*  Intent ProfileIntent = new Intent(getContext(), ProfileActivity.class);
                                     ProfileIntent.putExtra("visit_user_id", user_id);
-                                    startActivity(ProfileIntent);
+                                    startActivity(ProfileIntent);*/
+                                }
+                            });
+
+                            contactsViewHolder.profileImage.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent imageViewIntent = new Intent(getContext(), TuteeImageView.class);
+                                    imageViewIntent.putExtra("visit_user_image", retImage[0]);
+                                    startActivity(imageViewIntent);
+
                                 }
                             });
 

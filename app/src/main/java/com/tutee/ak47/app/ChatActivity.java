@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -72,6 +73,14 @@ public class ChatActivity extends AppCompatActivity {
 
         userName.setText(messageReceiverName);
         Picasso.get().load(messageReceiverImage).placeholder(com.tutee.ak47.app.R.drawable.profile).into(userImage);
+        userImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ProfileIntent = new Intent(ChatActivity.this, ProfileActivity.class);
+                ProfileIntent.putExtra("visit_user_id", messageReceiverID);
+                startActivity(ProfileIntent);
+            }
+        });
 
         sendMessageButton.setOnClickListener(new View.OnClickListener() {
             @Override

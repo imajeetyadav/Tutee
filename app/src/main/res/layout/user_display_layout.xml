@@ -9,10 +9,10 @@
         android:id="@+id/user_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+
+        android:layout_marginTop="5dp"
         android:orientation="horizontal"
-        android:elevation="6dp"
-        android:background="@color/Dark"
+        android:background="@color/colorPrimaryDark"
         >
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -60,5 +60,11 @@
 
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+        </LinearLayout>
+    <View
+        android:layout_below="@+id/user_layout"
+        android:background="@color/colorAccent"
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="60dp"/>
 </RelativeLayout>

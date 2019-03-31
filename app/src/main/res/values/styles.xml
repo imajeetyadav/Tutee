@@ -9,7 +9,13 @@
         <item name="android:navigationBarColor">@color/colorPrimary</item>
     </style>
 
-    <style name="AlertDialog" parent="Base.Theme.AppCompat.Light.Dialog">
 
+    <style name="TuteeDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!--buttons color-->
+        <item name="colorAccent">@android:color/white</item>
+        <!--title and message color-->
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <!--dialog background-->
+        <item name="android:windowBackground">@drawable/dialog_button</item>
     </style>
 </resources>

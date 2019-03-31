@@ -5,17 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FindFriendActivity"
-    android:background="@color/Dark">
+    android:background="@color/colorPrimaryDark">
 
     <include
         android:id="@+id/find_friend_toolbar"
         layout="@layout/app_bar"></include>
+    <EditText
+        android:layout_below="@+id/find_friend_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimary"
+        android:background="@color/colorPrimary"
+        android:hint="Search"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:elevation="4dp"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:padding="10dp"
+        android:maxLength="60"
+        android:textAlignment="center"
+        android:id="@+id/Search_friend"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/find_friend_recycler_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/find_friend_toolbar"
+        android:layout_below="@+id/Search_friend"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_centerVertical="true"

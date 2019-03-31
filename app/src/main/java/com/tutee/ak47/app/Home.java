@@ -1,9 +1,11 @@
 package com.tutee.ak47.app;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -102,9 +104,29 @@ public class Home extends AppCompatActivity {
         super.onOptionsItemSelected(item);
 
         if (item.getItemId() == com.tutee.ak47.app.R.id.main_lagout) {
-            updateUsersStatus("offline");
-            mAuth.signOut();
-            sendUserToLoginActivity();
+            final AlertDialog.Builder logoutBuiler = new AlertDialog.Builder(this, R.style.TuteeDialogTheme);
+
+            logoutBuiler.setTitle("Confirm Logout ?");
+            logoutBuiler.setMessage(" Do you really want to Logout?");
+            logoutBuiler.setCancelable(false);
+            logoutBuiler.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    updateUsersStatus("offline");
+                    mAuth.signOut();
+                    sendUserToLoginActivity();
+                    finish();
+                }
+            });
+            logoutBuiler.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //dismiss
+                }
+            });
+            logoutBuiler.show();
+
+
         }
         if (item.getItemId() == com.tutee.ak47.app.R.id.main_find_friend) {
             sendUserToFindFriend();

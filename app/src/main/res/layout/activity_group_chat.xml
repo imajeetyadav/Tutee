@@ -45,7 +45,7 @@
 
         <EditText
             android:id="@+id/input_group_message"
-            android:hint="Enter message"
+            android:hint="Enter Your Query"
             android:background="@android:color/transparent"
             android:layout_gravity="center"
             android:layout_marginLeft="16dp"

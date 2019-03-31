@@ -1,7 +1,11 @@
 package com.tutee.ak47.app;
 
+
 public class Groups {
-    private String date,message,name,time,type;
+
+    private String date,message,name,time,type,Count;
+
+
 
     public String getDate() {
         return date;
@@ -43,14 +47,21 @@ public class Groups {
         this.type = type;
     }
 
-    public Groups(String date, String message, String name, String time, String type) {
+    public Groups(String date, String message, String name, String time, String type, String count) {
         this.date = date;
         this.message = message;
         this.name = name;
         this.time = time;
         this.type = type;
+
+        Count = count;
     }
 
     public Groups() {
+    }
+
+
+    public String getCount() {
+        return Count;
     }
 }

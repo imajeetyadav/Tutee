@@ -59,7 +59,7 @@
 
         <EditText
             android:id="@+id/input_query_message"
-            android:hint="Enter message"
+            android:hint="Replay !"
             android:background="@android:color/transparent"
             android:layout_gravity="center"
             android:layout_marginLeft="16dp"

@@ -46,7 +46,7 @@ public class QueryChatActivity extends AppCompatActivity {
     private String currentTime;
     private String getQueryName,pushKey;
     private FirebaseAuth mAuth;
-    private DatabaseReference usersRef,queryNameRef,groupMessageKeyRef;
+    private DatabaseReference usersRef,queryNameRef,groupMessageKeyRef,countRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +64,8 @@ public class QueryChatActivity extends AppCompatActivity {
         usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
         queryNameRef=FirebaseDatabase.getInstance().getReference().child("Groups")
                 .child(currentGroupName).child(pushKey).child("Query");
+        countRef=FirebaseDatabase.getInstance().getReference().child("Groups")
+                .child(currentGroupName).child(pushKey);
 
 
         QueryChatRecyclerList = (RecyclerView) findViewById(com.tutee.ak47.app.R.id.query_chat_recycle_list);
@@ -224,6 +226,8 @@ public class QueryChatActivity extends AppCompatActivity {
             SimpleDateFormat currentTimeFormat=new SimpleDateFormat("hh:mm a");
             currentTime=currentTimeFormat.format(calForTime.getTime());
 
+
+
             HashMap<String,Object> groupMessageKey = new HashMap<>();
             queryNameRef.updateChildren(groupMessageKey);
 
@@ -235,6 +239,24 @@ public class QueryChatActivity extends AppCompatActivity {
             messageInfoMap.put("date",currentDate);
             messageInfoMap.put("time",currentTime);
             groupMessageKeyRef.updateChildren(messageInfoMap);
+
+            queryNameRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()){
+
+                        String Count= String.valueOf(dataSnapshot.getChildrenCount());
+                        countRef.child("Count").setValue(Count);
+
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
 
 
         }

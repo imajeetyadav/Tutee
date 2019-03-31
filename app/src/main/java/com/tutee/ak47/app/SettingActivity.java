@@ -66,7 +66,6 @@ public class SettingActivity extends AppCompatActivity {
 
 
         userProfileImagesRef = FirebaseStorage.getInstance().getReference().child("Profile Images");
-
         uploadToDatabase = FirebaseStorage.getInstance().getReference();
 
         Initialization();
@@ -82,9 +81,9 @@ public class SettingActivity extends AppCompatActivity {
         numberStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent verifcationActivity = new Intent(SettingActivity.this, phoneVerification.class);
-                verifcationActivity.putExtra("P_number", sendNumber);
-                startActivity(verifcationActivity);
+                Intent verificationActivity = new Intent(SettingActivity.this, phoneVerification.class);
+                verificationActivity.putExtra("P_number", sendNumber);
+                startActivity(verificationActivity);
             }
         });
 

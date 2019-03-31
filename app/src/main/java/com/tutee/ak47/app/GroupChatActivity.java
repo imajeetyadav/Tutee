@@ -98,7 +98,7 @@ public class GroupChatActivity extends AppCompatActivity {
         final FirebaseRecyclerAdapter<Groups,GroupChatViewHolder> adapter
                 =new FirebaseRecyclerAdapter<Groups, GroupChatViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull GroupChatViewHolder groupChatViewHolder, final int position, @NonNull final Groups groups) {
+            protected void onBindViewHolder(@NonNull final GroupChatViewHolder groupChatViewHolder, final int position, @NonNull final Groups groups) {
 
                 groupChatViewHolder.setIsRecyclable(false);
 
@@ -108,8 +108,13 @@ public class GroupChatActivity extends AppCompatActivity {
                     groupChatViewHolder.userName.setVisibility(View.INVISIBLE);
                     groupChatViewHolder.groupMessage.setVisibility(View.INVISIBLE);
                     groupChatViewHolder.messageTime.setVisibility(View.INVISIBLE);
-
+                    groupChatViewHolder.countSender.setVisibility(View.VISIBLE);
                     groupChatViewHolder.groupSenderMessage.setText(groups.getMessage());
+
+
+                    groupChatViewHolder.countSender.setText(groups.getCount());
+
+
 
                     Calendar calForDate=Calendar.getInstance();
                     SimpleDateFormat currentDateFormat=new SimpleDateFormat("dd MMM, yyyy");
@@ -126,6 +131,8 @@ public class GroupChatActivity extends AppCompatActivity {
 
 
 
+
+
                 }
                 else {
 
@@ -135,6 +142,11 @@ public class GroupChatActivity extends AppCompatActivity {
 
                     groupChatViewHolder.groupSenderMessage.setVisibility(View.INVISIBLE);
                     groupChatViewHolder.groupSenderTime.setVisibility(View.INVISIBLE);
+                    groupChatViewHolder.countReceiver.setVisibility(View.VISIBLE);
+
+                    groupChatViewHolder.countReceiver.setText(groups.getCount());
+
+
 
 
                     Calendar calForDate=Calendar.getInstance();
@@ -189,7 +201,7 @@ public class GroupChatActivity extends AppCompatActivity {
     }
 
     public static class GroupChatViewHolder extends RecyclerView.ViewHolder {
-        TextView userName,groupMessage,messageTime,groupSenderMessage,groupSenderTime;
+        TextView userName,groupMessage,messageTime,groupSenderMessage,groupSenderTime,countSender,countReceiver;
        // CircleImageView profileImage;
 
 
@@ -202,6 +214,8 @@ public class GroupChatActivity extends AppCompatActivity {
             messageTime=itemView.findViewById(com.tutee.ak47.app.R.id.group_time);
             groupSenderMessage=itemView.findViewById(com.tutee.ak47.app.R.id.sender_message_text);
             groupSenderTime=itemView.findViewById(com.tutee.ak47.app.R.id.group_sender_time);
+            countReceiver=itemView.findViewById(R.id.count_receiver);
+            countSender=itemView.findViewById(R.id.count_sender);
 
 
         }
@@ -270,6 +284,7 @@ public class GroupChatActivity extends AppCompatActivity {
             messageInfoMap.put("date",currentDate);
             messageInfoMap.put("time",currentTime);
             messageInfoMap.put("Query","");
+            messageInfoMap.put("Count","0");
             groupMessageKeyRef.updateChildren(messageInfoMap);
 
 

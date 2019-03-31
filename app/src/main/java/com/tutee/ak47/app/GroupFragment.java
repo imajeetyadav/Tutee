@@ -3,6 +3,7 @@ package com.tutee.ak47.app;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -46,6 +47,7 @@ public class GroupFragment extends Fragment {
     private DatabaseReference rootRef;
     private FirebaseAuth mAuth;
     private FloatingActionButton createNewGroup;
+    private EditText GroupSearch;
     private String currentUserID;
 
     public GroupFragment() {
@@ -124,21 +126,25 @@ public class GroupFragment extends Fragment {
 
     private void IntializeFields() {
 
-
+        GroupSearch=(EditText)groupFragmentView.findViewById(R.id.Search_Topic);
+        GroupSearch.setSelected(false);
         list_view=(ListView)groupFragmentView.findViewById(com.tutee.ak47.app.R.id.list_view);
         arrayAdapter=new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,list_of_groups);
         list_view.setAdapter(arrayAdapter);
         createNewGroup=(FloatingActionButton) groupFragmentView.findViewById(com.tutee.ak47.app.R.id.create_group);
 
 
+
     }
 
     private void RequestNewGroup() {
-        AlertDialog.Builder builder=new AlertDialog.Builder(getContext(), com.tutee.ak47.app.R.style.AlertDialog);
-        builder.setTitle(" Create New Topic Or Search In Existing  Topic");
+        AlertDialog.Builder builder=new AlertDialog.Builder(getContext(), com.tutee.ak47.app.R.style.TuteeDialogTheme);
+        builder.setTitle(" Create New Topic ");
 
         final EditText groupNamefield =new EditText(getContext());
-        groupNamefield.setHint("eg. Machine  learning  , Android ");
+        groupNamefield.setTextColor(Color.WHITE);
+        groupNamefield.setHintTextColor(Color.MAGENTA);
+        groupNamefield.setHint("Your Query Related to which field");
         builder.setView(groupNamefield);
 
         builder.setPositiveButton("Create ", new DialogInterface.OnClickListener() {
