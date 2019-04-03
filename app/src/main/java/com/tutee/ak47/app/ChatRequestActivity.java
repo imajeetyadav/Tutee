@@ -3,6 +3,7 @@ package com.tutee.ak47.app;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -75,7 +76,7 @@ public class ChatRequestActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter<Contacts,RequestsViewHolder> adapter=
                 new FirebaseRecyclerAdapter<Contacts, RequestsViewHolder>(options) {
                     @Override
-                    protected void onBindViewHolder(@NonNull final RequestsViewHolder holder, int position, @NonNull Contacts contacts) {
+                    protected void onBindViewHolder(@NonNull final RequestsViewHolder holder, final int position, @NonNull Contacts contacts) {
 
 
                         final String list_of_Id=getRef(position).getKey();
@@ -173,6 +174,16 @@ public class ChatRequestActivity extends AppCompatActivity {
                                                          // list_of_Id become receiverID
                                                      }
                                                  });
+
+                                              holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                                  @Override
+                                                  public void onClick(View v) {
+                                                      String visit_user_id =getRef(position).getKey();
+                                                      Intent ProfileIntent=new Intent(ChatRequestActivity.this,ProfileActivity.class);
+                                                      ProfileIntent.putExtra("visit_user_id",visit_user_id);
+                                                      startActivity(ProfileIntent);
+                                                  }
+                                              });
 
 
                                              }

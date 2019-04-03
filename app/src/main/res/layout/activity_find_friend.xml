@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FindFriendActivity"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorPrimaryDark"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <include
         android:id="@+id/find_friend_toolbar"
@@ -26,13 +28,14 @@
         android:maxLength="60"
         android:textAlignment="center"
         android:id="@+id/Search_friend"
+
         />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/find_friend_recycler_list"
+        android:layout_below="@+id/Search_friend"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/Search_friend"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_centerVertical="true"

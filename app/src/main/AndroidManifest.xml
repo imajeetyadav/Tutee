@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.tutee.ak47.app">
 
-    <!--Updated on 7 dec 2018-->
-
+    <!-- Updated on 7 dec 2018 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -19,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Launcher"
         tools:replace="android:appComponentFactory">
+        <service
+            android:name=".BackgroundService"></service>
+
         <activity
             android:name=".LoginActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
@@ -38,7 +40,6 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" /> <!-- optional (needed if default theme has no action bar) -->
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
@@ -65,8 +66,7 @@
         <activity
             android:name=".TuteeImageView"
             android:parentActivityName=".Home" />
-        <activity android:name=".QueryChatActivity"
-            ></activity>
+        <activity android:name=".QueryChatActivity" />
     </application>
 
 </manifest>

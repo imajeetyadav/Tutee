@@ -24,11 +24,11 @@
             android:id="@+id/input_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textCapWords"
+            android:drawableLeft="@drawable/name"
             android:hint="Name"
-            android:textColorHint="#000000"
+            android:inputType="textCapWords"
             android:textColor="#000000"
-            android:drawableLeft="@drawable/name"/>
+            android:textColorHint="#000000" />
         <EditText
             android:id="@+id/input_email"
             android:layout_width="match_parent"

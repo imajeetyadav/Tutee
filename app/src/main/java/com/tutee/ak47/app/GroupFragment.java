@@ -10,7 +10,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AlertDialog;
+
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +29,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -41,7 +45,7 @@ public class GroupFragment extends Fragment {
 
     private View groupFragmentView;
     private ListView list_view;
-    private ArrayAdapter<String> arrayAdapter;
+    private ArrayAdapter<String> arrayAdapter,arrayAdapterNew;
     private ArrayList<String> list_of_groups=new ArrayList<>();
     private DatabaseReference GroupRef,AdminGroupRef;
     private DatabaseReference rootRef;
@@ -67,17 +71,31 @@ public class GroupFragment extends Fragment {
         AdminGroupRef=FirebaseDatabase.getInstance().getReference().child("Group Admins");
         GroupRef.keepSynced(true);
 
-
-
         IntializeFields();
         RetriveAndDisplay();
 
+        GroupSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+               arrayAdapter.getFilter().filter(s);
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         createNewGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 RequestNewGroup();
-               /* Snackbar.make(v, "Here's a Snackb", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
+
             }
         });
 
@@ -97,7 +115,6 @@ public class GroupFragment extends Fragment {
         return groupFragmentView;
 
     }
-
 
     private void RetriveAndDisplay() {
         GroupRef.addValueEventListener(new ValueEventListener() {
@@ -127,9 +144,9 @@ public class GroupFragment extends Fragment {
     private void IntializeFields() {
 
         GroupSearch=(EditText)groupFragmentView.findViewById(R.id.Search_Topic);
-        GroupSearch.setSelected(false);
         list_view=(ListView)groupFragmentView.findViewById(com.tutee.ak47.app.R.id.list_view);
         arrayAdapter=new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,list_of_groups);
+        arrayAdapterNew=new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,list_of_groups);
         list_view.setAdapter(arrayAdapter);
         createNewGroup=(FloatingActionButton) groupFragmentView.findViewById(com.tutee.ak47.app.R.id.create_group);
 
@@ -175,7 +192,7 @@ public class GroupFragment extends Fragment {
     }
 
 
- private void createNewGroup(final String groupName){
+    private void createNewGroup(final String groupName){
      final DatabaseReference userNameRef = rootRef.child("Groups").child(groupName);
      ValueEventListener eventListener = new ValueEventListener() {
          @Override

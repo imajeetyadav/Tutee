@@ -71,6 +71,9 @@ public class Home extends AppCompatActivity {
         else{
             updateUsersStatus("online");
         }
+       /* Intent serviceStop=new Intent(this,BackgroundService.class);
+        stopService(serviceStop);*/
+
     }
 
     @Override
@@ -79,7 +82,11 @@ public class Home extends AppCompatActivity {
         FirebaseUser currentUser=mAuth.getCurrentUser();
         if (currentUser!=null){
             updateUsersStatus("offline");
+            /*Intent serviceStart=new Intent(this,BackgroundService.class);
+            startService(serviceStart);*/
         }
+
+
     }
 
     @Override
@@ -88,7 +95,10 @@ public class Home extends AppCompatActivity {
         FirebaseUser currentUser=mAuth.getCurrentUser();
         if (currentUser !=null){
             updateUsersStatus("offline");
+           /* Intent serviceStart=new Intent(this,BackgroundService.class);
+            startService(serviceStart);*/
         }
+
     }
 
     @Override
