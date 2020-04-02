@@ -1,18 +1,20 @@
-package com.tutee.ak47.app;
+package com.tutee.ak47.app.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.tutee.ak47.app.model.Messages;
 
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.Objects;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
 
@@ -24,33 +26,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         this.userMessagesList = userMessagesList;
     }
 
-    public class MessageViewHolder extends RecyclerView.ViewHolder
-                {
-
-        public TextView senderMessageText, receiverMessageText;
-
-        public MessageViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            senderMessageText = (TextView) itemView.findViewById(com.tutee.ak47.app.R.id.sender_message_text);
-            receiverMessageText = (TextView) itemView.findViewById(com.tutee.ak47.app.R.id.receiver_message_text);
-
-        }
-    }
-
-    @NonNull
-    @Override
-    public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(com.tutee.ak47.app.R.layout.custom_messages_layout, viewGroup, false);
-        mAuth = FirebaseAuth.getInstance();
-        return new MessageViewHolder(view);
-    }
-
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
 
         holder.setIsRecyclable(true);
-        String messageSenderId = mAuth.getCurrentUser().getUid();
+        String messageSenderId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
         Messages messages = userMessagesList.get(position);
       //  Log.d("after uid", messages.toString());
 
@@ -91,6 +71,27 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             }
         }
 
+    }
+
+    @NonNull
+    @Override
+    public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(com.tutee.ak47.app.R.layout.custom_messages_layout, viewGroup, false);
+        mAuth = FirebaseAuth.getInstance();
+        return new MessageViewHolder(view);
+    }
+
+    class MessageViewHolder extends RecyclerView.ViewHolder {
+
+        TextView senderMessageText, receiverMessageText;
+
+        MessageViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            senderMessageText = itemView.findViewById(com.tutee.ak47.app.R.id.sender_message_text);
+            receiverMessageText = itemView.findViewById(com.tutee.ak47.app.R.id.receiver_message_text);
+
+        }
     }
 
     @Override

@@ -1,14 +1,16 @@
-package com.tutee.ak47.app;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+package com.tutee.ak47.app.activity;
 
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.squareup.picasso.Picasso;
 
-public class TuteeImageView extends AppCompatActivity {
+import java.util.Objects;
+
+public class TuteeImageViewActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private String photoViewIntentReceiver;
     private ImageView photoView;
@@ -18,13 +20,13 @@ public class TuteeImageView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(com.tutee.ak47.app.R.layout.activity_tutee_image_view);
 
-        photoViewIntentReceiver=getIntent().getExtras().get("visit_user_image").toString();
+        photoViewIntentReceiver = Objects.requireNonNull(Objects.requireNonNull(getIntent().getExtras()).get("visit_user_image")).toString();
 
-        mToolbar=(Toolbar)findViewById(com.tutee.ak47.app.R.id.image_view_toolbar);
+        mToolbar = findViewById(com.tutee.ak47.app.R.id.image_view_toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        photoView=(ImageView)findViewById(com.tutee.ak47.app.R.id.display_photo);
+        photoView = findViewById(com.tutee.ak47.app.R.id.display_photo);
         Picasso.get().load(photoViewIntentReceiver).placeholder(com.tutee.ak47.app.R.drawable.profile).into(photoView);
 
     }

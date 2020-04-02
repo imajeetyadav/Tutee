@@ -1,7 +1,7 @@
-package com.tutee.ak47.app;
+package com.tutee.ak47.app.model;
 
 public class Contacts {
-    public String name, image ,bio,request_type;
+    private String name, image, bio, request_type;
 
     public Contacts() {
 

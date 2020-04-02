@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/GitHub-Tutee.iml" filepath="$PROJECT_DIR$/GitHub-Tutee.iml" group="Tutee" />
       <module fileurl="file://$PROJECT_DIR$/Tutee.iml" filepath="$PROJECT_DIR$/Tutee.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/Tutee-app.iml" filepath="$PROJECT_DIR$/app/Tutee-app.iml" group="Tutee/app" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

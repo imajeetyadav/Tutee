@@ -1,9 +1,12 @@
-package com.tutee.ak47.app;
+package com.tutee.ak47.app.adapter;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
+import com.tutee.ak47.app.fragment.ContactsFragment;
+import com.tutee.ak47.app.fragment.GroupFragment;
 
 public class TabsAccessorAdapter extends FragmentPagerAdapter {
     public TabsAccessorAdapter(FragmentManager fm) {
@@ -15,11 +18,9 @@ public class TabsAccessorAdapter extends FragmentPagerAdapter {
         switch (i) {
 
             case 0:
-                GroupFragment group = new GroupFragment();
-                return group;
+                return new GroupFragment();
             case 1:
-                ContactsFragment feeds = new ContactsFragment();
-                return feeds;
+                return new ContactsFragment();
             default:
                 return null;
         }

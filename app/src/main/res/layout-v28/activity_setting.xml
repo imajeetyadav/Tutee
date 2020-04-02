@@ -7,8 +7,10 @@
     android:background="@color/Dark"
     tools:context=".activity.SettingActivity">
 
-    <include layout="@layout/app_bar"
-        android:id="@+id/setting_toolbar" />
+    <include
+        android:id="@+id/setting_toolbar"
+        layout="@layout/app_bar" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="120dp"
@@ -21,10 +23,10 @@
         android:id="@+id/set_profile_image"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="30dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerInParent="true"
         android:layout_below="@id/setting_toolbar"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
         android:src="@drawable/profile"
         app:civ_border_color="@color/grayLight"
         app:civ_border_width="1dp" />
@@ -33,55 +35,55 @@
         android:id="@+id/profile_user_name"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_below="@id/set_profile_image"
         android:layout_alignParentEnd="true"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:autofillHints="Profile Name"
         android:accessibilityHeading="false"
+        android:autofillHints="Profile Name"
+        android:background="@color/Dark"
+        android:elevation="20dp"
         android:fontFamily="@font/cantata_one"
-        android:layout_below="@id/set_profile_image"
         android:gravity="center"
         android:hint="@string/user_name_hint"
-        android:textColor="@color/grayLight"
         android:inputType="textCapWords"
-        android:textSize="20sp"
-        android:textStyle="bold"
         android:maxLength="20"
-        android:background="@color/Dark"
-        android:elevation="20dp"/>
+        android:textColor="@color/grayLight"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/bio_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/bio_status"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:text="@string/bio"
-        android:fontFamily="@font/cantata_one"
-        android:textColor="@color/grayLight"
         android:layout_below="@id/profile_user_name"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/cantata_one"
+        android:text="@string/bio"
+        android:textColor="@color/grayLight"
         android:textSize="13sp"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/profile_user_bio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/bio_status"
         android:layout_alignParentEnd="true"
         android:layout_margin="15dp"
-        android:padding="10dp"
         android:accessibilityHeading="false"
+        android:background="@color/Dark"
+        android:elevation="20dp"
         android:fontFamily="@font/cantata_one"
-        android:layout_below="@id/bio_status"
         android:gravity="center"
+        android:maxLength="100"
+        android:padding="10dp"
         android:text="Hey there! I am using tutee"
         android:textColor="@color/grayLight"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:background="@color/Dark"
-        android:elevation="20dp"
-        android:maxLength="100"/>
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/save_profile"
@@ -95,7 +97,7 @@
         android:layout_marginEnd="0dp"
         android:background="@drawable/button_background"
         android:fontFamily="serif"
-        android:text="@string/save_profile"
+        android:text="Save"
         android:textColor="@color/grayLight"
         android:textSize="16sp" />
 

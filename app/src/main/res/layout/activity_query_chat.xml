@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".QueryChatActivity">
+    tools:context=".activity.QueryChatActivity">
 
    <!-- /*Date :-  7 dec 2018
     by Ak47*/-->
@@ -59,7 +59,7 @@
 
         <EditText
             android:id="@+id/input_query_message"
-            android:hint="Replay !"
+            android:hint="@string/replay"
             android:background="@android:color/transparent"
             android:layout_gravity="center"
             android:layout_marginLeft="16dp"
@@ -75,7 +75,8 @@
             android:layout_height="48dp"
             android:src="@android:drawable/ic_menu_send"
             android:gravity="center"
-            android:layout_gravity="bottom"/>
+            android:layout_gravity="bottom"
+            android:contentDescription="@string/send_message_button" />
 
 
     </LinearLayout>

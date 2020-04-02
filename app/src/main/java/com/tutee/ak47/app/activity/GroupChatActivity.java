@@ -1,7 +1,4 @@
-package com.tutee.ak47.app;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+package com.tutee.ak47.app.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,11 +9,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -26,6 +25,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tutee.ak47.app.R;
+import com.tutee.ak47.app.model.Groups;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -66,7 +67,7 @@ public class GroupChatActivity extends AppCompatActivity {
         usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
         groupNameRef=FirebaseDatabase.getInstance().getReference().child("Groups").child(currentGroupName);
         groupNameRef.keepSynced(true);
-        GroupChatRecyclerList = (RecyclerView) findViewById(com.tutee.ak47.app.R.id.group_chat_recycle_list);
+        GroupChatRecyclerList = findViewById(R.id.group_chat_recycle_list);
         GroupChatRecyclerList.setLayoutManager(new LinearLayoutManager(this));
 
 

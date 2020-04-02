@@ -1,11 +1,4 @@
-package com.tutee.ak47.app;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import de.hdodenhof.circleimageview.CircleImageView;
+package com.tutee.ak47.app.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +10,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -26,9 +25,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.tutee.ak47.app.R;
+import com.tutee.ak47.app.adapter.SearchFriendAdapter;
+import com.tutee.ak47.app.model.Contacts;
 
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.Objects;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FindFriendActivity extends AppCompatActivity {
     private Toolbar mToolbar;
@@ -47,7 +51,7 @@ public class FindFriendActivity extends AppCompatActivity {
         userRef.child("name").keepSynced(true);
 
         searchList=new ArrayList<>();
-        FindFriendRecyclerList = (RecyclerView) findViewById(com.tutee.ak47.app.R.id.find_friend_recycler_list);
+        FindFriendRecyclerList = findViewById(R.id.find_friend_recycler_list);
         FindFriendRecyclerList.setLayoutManager(new LinearLayoutManager(this));
 
 
@@ -77,9 +81,9 @@ public class FindFriendActivity extends AppCompatActivity {
         });
 
 
-        mToolbar = (Toolbar) findViewById(com.tutee.ak47.app.R.id.find_friend_toolbar);
+        mToolbar = findViewById(R.id.find_friend_toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Find Friends");
 
@@ -146,8 +150,7 @@ public class FindFriendActivity extends AppCompatActivity {
             @Override
             public FindFriendViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
                 View view= LayoutInflater.from(viewGroup.getContext()).inflate(com.tutee.ak47.app.R.layout.user_display_layout,viewGroup,false);
-                FindFriendViewHolder viewHolder=new FindFriendViewHolder(view);
-                return  viewHolder;
+                return new FindFriendViewHolder(view);
             }
         };
 
@@ -161,7 +164,7 @@ public class FindFriendActivity extends AppCompatActivity {
         CircleImageView profileImage;
 
 
-        public FindFriendViewHolder(@NonNull View itemView) {
+        FindFriendViewHolder(@NonNull View itemView) {
             super(itemView);
 
             userName=itemView.findViewById(com.tutee.ak47.app.R.id.user_profile_name);

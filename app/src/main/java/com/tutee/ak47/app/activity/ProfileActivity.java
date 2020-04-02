@@ -1,14 +1,13 @@
-package com.tutee.ak47.app;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import de.hdodenhof.circleimageview.CircleImageView;
+package com.tutee.ak47.app.activity;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,6 +18,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.tutee.ak47.app.R;
+
+import java.util.Objects;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
     private String receiverUserId, senderUserID, current_State;
@@ -44,19 +48,19 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void InitializeFields() {
 
-        receiverUserId = getIntent().getExtras().get("visit_user_id").toString();
+        receiverUserId = Objects.requireNonNull(getIntent().getExtras()).get("visit_user_id").toString();
 
-        mToolbar = (Toolbar) findViewById(com.tutee.ak47.app.R.id.profile_activity_toolbar);
+        mToolbar = findViewById(com.tutee.ak47.app.R.id.profile_activity_toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Profile");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Profile");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        userProfileImage = (CircleImageView) findViewById(com.tutee.ak47.app.R.id.visit_profile_image);
-        userProfileName = (TextView) findViewById(com.tutee.ak47.app.R.id.visit_user_name);
-        userProfileBio=(TextView)findViewById(com.tutee.ak47.app.R.id.visit_user_bio);
-        sendMessageRequestButton = (Button) findViewById(com.tutee.ak47.app.R.id.send_message_request_button);
-        declineMessageChatRequest = (Button) findViewById(com.tutee.ak47.app.R.id.decline_message_request_button);
+        userProfileImage = findViewById(com.tutee.ak47.app.R.id.visit_profile_image);
+        userProfileName = findViewById(com.tutee.ak47.app.R.id.visit_user_name);
+        userProfileBio = findViewById(com.tutee.ak47.app.R.id.visit_user_bio);
+        sendMessageRequestButton = findViewById(com.tutee.ak47.app.R.id.send_message_request_button);
+        declineMessageChatRequest = findViewById(com.tutee.ak47.app.R.id.decline_message_request_button);
         current_State = "new";
 
         mAuth = FirebaseAuth.getInstance();
@@ -65,7 +69,7 @@ public class ProfileActivity extends AppCompatActivity {
         contactsRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
       //  notificationRef = FirebaseDatabase.getInstance().getReference().child("Notifications");
 
-        senderUserID = mAuth.getCurrentUser().getUid();
+        senderUserID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
     }
 
@@ -75,14 +79,14 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if ((dataSnapshot.exists()) && dataSnapshot.hasChild("image")) {
                     String userName = dataSnapshot.child("name").getValue().toString();
-                    String userProfile = dataSnapshot.child("image").getValue().toString();
+                    String userProfile = Objects.requireNonNull(dataSnapshot.child("image").getValue()).toString();
 
                     Picasso.get().load(userProfile).placeholder(com.tutee.ak47.app.R.drawable.profile).into(userProfileImage);
                     userProfileName.setText(userName);
 
                     ManageChatRequest();
                 } else {
-                    String userName = dataSnapshot.child("name").getValue().toString();
+                    String userName = Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString();
                     userProfileName.setText(userName);
 
                     ManageChatRequest();
@@ -109,10 +113,10 @@ public class ProfileActivity extends AppCompatActivity {
                     String request_type = dataSnapshot.child(receiverUserId).child("request_type").getValue().toString();
                     if (request_type.equals("sent")) {
                         current_State = "request_sent";
-                        sendMessageRequestButton.setText("Cancel Request ");
+                        sendMessageRequestButton.setText(R.string.cancel_request);
                     } else if (request_type.equals("received")) {
                         current_State = "request_received";
-                        sendMessageRequestButton.setText("Accept Request");
+                        sendMessageRequestButton.setText(R.string.accept_request);
 
                         declineMessageChatRequest.setVisibility(View.VISIBLE);
                         declineMessageChatRequest.setEnabled(true);
@@ -131,7 +135,7 @@ public class ProfileActivity extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.hasChild(receiverUserId)) {
                                         current_State = "friends";
-                                        sendMessageRequestButton.setText("Remove this Contact");
+                                        sendMessageRequestButton.setText(R.string.remove_this_contact);
                                     }
                                 }
 
@@ -190,7 +194,7 @@ public class ProfileActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             sendMessageRequestButton.setEnabled(true);
                             current_State = "new";
-                            sendMessageRequestButton.setText("Send Request");
+                            sendMessageRequestButton.setText(R.string.send_request);
 
                             declineMessageChatRequest.setVisibility(View.INVISIBLE);
                             declineMessageChatRequest.setEnabled(false);
@@ -233,7 +237,7 @@ public class ProfileActivity extends AppCompatActivity {
                                                                                     if (task.isSuccessful()) {
                                                                                         sendMessageRequestButton.setEnabled(true);
                                                                                         current_State = "friends";
-                                                                                        sendMessageRequestButton.setText("Remove this Contact");
+                                                                                        sendMessageRequestButton.setText(R.string.remove_this_contact);
 
                                                                                         declineMessageChatRequest.setVisibility(View.INVISIBLE);
                                                                                         declineMessageChatRequest.setEnabled(false);
@@ -288,7 +292,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                                         sendMessageRequestButton.setEnabled(true);
                                         current_State = "request_sent";
-                                        sendMessageRequestButton.setText("Cancel Request ");
+                                        sendMessageRequestButton.setText(R.string.cancel_request);
 
                                     }
 
@@ -311,7 +315,7 @@ public class ProfileActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             sendMessageRequestButton.setEnabled(true);
                             current_State = "new";
-                            sendMessageRequestButton.setText("Send Request");
+                            sendMessageRequestButton.setText(R.string.send_request);
                             declineMessageChatRequest.setVisibility(View.INVISIBLE);
                             declineMessageChatRequest.setEnabled(false);
 

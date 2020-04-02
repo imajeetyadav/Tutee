@@ -1,28 +1,29 @@
-package com.tutee.ak47.app;
+package com.tutee.ak47.app.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.tutee.ak47.app.R;
+import com.tutee.ak47.app.adapter.TabsAccessorAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Objects;
 
-public class Home extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     private androidx.appcompat.widget.Toolbar mToolbar;
     private ViewPager myViewPager;
@@ -47,14 +48,14 @@ public class Home extends AppCompatActivity {
 
         mToolbar = findViewById(com.tutee.ak47.app.R.id.main_app_toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Tutee");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Tutee");
 
-        myViewPager = (ViewPager) findViewById(com.tutee.ak47.app.R.id.main_tab_pager);
+        myViewPager = findViewById(R.id.main_tab_pager);
         myTabsAccessorAdapter = new TabsAccessorAdapter(getSupportFragmentManager());
         myViewPager.setAdapter(myTabsAccessorAdapter);
 
 
-        myTabLayout = (TabLayout) findViewById(com.tutee.ak47.app.R.id.mainTab);
+        myTabLayout = findViewById(R.id.mainTab);
         myTabLayout.setupWithViewPager(myViewPager);
 
 
@@ -158,20 +159,20 @@ public class Home extends AppCompatActivity {
     }
 
     private void sendUserToAboutUs() {
-        Intent aboutUsIntent = new Intent(Home.this, AboutUsActivity.class);
+        Intent aboutUsIntent = new Intent(MainActivity.this, AboutUsActivity.class);
         startActivity(aboutUsIntent);
     }
 
 
     private void sendUserToLoginActivity() {
-        Intent LoginIntent = new Intent(Home.this, LoginActivity.class);
+        Intent LoginIntent = new Intent(MainActivity.this, LoginActivity.class);
         LoginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(LoginIntent);
         finish();
     }
 
     private void sendUserToSettingActivity() {
-        Intent SettingIntent = new Intent(Home.this, SettingActivity.class);
+        Intent SettingIntent = new Intent(MainActivity.this, SettingActivity.class);
         //  SettingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(SettingIntent);
         //    finish();
@@ -181,7 +182,7 @@ public class Home extends AppCompatActivity {
 
 
     private void sendUserToFindFriend() {
-        Intent findFriendIntent = new Intent(Home.this, FindFriendActivity.class);
+        Intent findFriendIntent = new Intent(MainActivity.this, FindFriendActivity.class);
         startActivity(findFriendIntent);
     }
 
@@ -203,7 +204,7 @@ public class Home extends AppCompatActivity {
         onlineStateMap.put("date",saveCurrentDate);
         onlineStateMap.put("state",state);
 
-        currentUserID=mAuth.getCurrentUser().getUid();
+        currentUserID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
         rootref.child("Users").child(currentUserID).child("userState")
                 .updateChildren(onlineStateMap);
 

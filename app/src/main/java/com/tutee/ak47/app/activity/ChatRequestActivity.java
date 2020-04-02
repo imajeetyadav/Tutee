@@ -1,7 +1,4 @@
-package com.tutee.ak47.app;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+package com.tutee.ak47.app.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +9,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -24,10 +27,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.tutee.ak47.app.model.Contacts;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatRequestActivity extends AppCompatActivity {
@@ -51,11 +52,11 @@ public class ChatRequestActivity extends AppCompatActivity {
         contactRef=FirebaseDatabase.getInstance().getReference().child("Contacts");
 
 
-        requestList = (RecyclerView) findViewById(com.tutee.ak47.app.R.id.chat_request_recycler_list);
+        requestList = findViewById(com.tutee.ak47.app.R.id.chat_request_recycler_list);
         requestList.setLayoutManager(new LinearLayoutManager(this));
 
 
-        mToolbar = (Toolbar) findViewById(com.tutee.ak47.app.R.id.chat_request_toolbar);
+        mToolbar = findViewById(com.tutee.ak47.app.R.id.chat_request_toolbar);
         mToolbar.setTitle("Chat Request Status");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

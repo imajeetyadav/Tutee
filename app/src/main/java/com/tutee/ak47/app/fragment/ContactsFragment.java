@@ -1,20 +1,18 @@
-package com.tutee.ak47.app;
+package com.tutee.ak47.app.fragment;
 
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import de.hdodenhof.circleimageview.CircleImageView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -28,6 +26,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.tutee.ak47.app.activity.ChatActivity;
+import com.tutee.ak47.app.activity.ChatRequestActivity;
+import com.tutee.ak47.app.activity.TuteeImageViewActivity;
+import com.tutee.ak47.app.model.Contacts;
+
+import java.util.Objects;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -58,7 +64,7 @@ public class ContactsFragment extends Fragment {
 
         myContactsList = contactsView.findViewById(com.tutee.ak47.app.R.id.contacts_recycler_list);
         myContactsList.setLayoutManager(new LinearLayoutManager(getContext()));
-        viewRequestList=(FloatingActionButton)contactsView.findViewById(com.tutee.ak47.app.R.id.friend_request);
+        viewRequestList = contactsView.findViewById(com.tutee.ak47.app.R.id.friend_request);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -70,7 +76,7 @@ public class ContactsFragment extends Fragment {
         viewRequestList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent friendRequest=new Intent(getContext(),ChatRequestActivity.class);
+                Intent friendRequest = new Intent(getContext(), ChatRequestActivity.class);
                 startActivity(friendRequest);
             }
         });
@@ -97,13 +103,14 @@ public class ContactsFragment extends Fragment {
                 final String[] retImage = {"default_image"};
                 contactsViewHolder.lastSeen.setVisibility(View.VISIBLE);
 
+                assert userID != null;
                 userRef.child(userID).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
 
                             if (dataSnapshot.hasChild("image")) {
-                                retImage[0] = dataSnapshot.child("image").getValue().toString();
+                                retImage[0] = Objects.requireNonNull(dataSnapshot.child("image").getValue()).toString();
                                 Picasso.get().load(retImage[0]).networkPolicy(NetworkPolicy.OFFLINE)
                                         .placeholder(com.tutee.ak47.app.R.drawable.profile).into(contactsViewHolder.profileImage, new Callback() {
                                     @Override
@@ -166,7 +173,7 @@ public class ContactsFragment extends Fragment {
                             contactsViewHolder.profileImage.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Intent imageViewIntent = new Intent(getContext(), TuteeImageView.class);
+                                    Intent imageViewIntent = new Intent(getContext(), TuteeImageViewActivity.class);
                                     imageViewIntent.putExtra("visit_user_image", retImage[0]);
                                     startActivity(imageViewIntent);
 

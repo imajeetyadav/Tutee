@@ -1,9 +1,11 @@
-package com.tutee.ak47.app;
+package com.tutee.ak47.app.activity;
+
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.os.Bundle;
+import java.util.Objects;
 
 public class AboutUsActivity extends AppCompatActivity {
     private Toolbar mToolbar;
@@ -13,9 +15,9 @@ public class AboutUsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(com.tutee.ak47.app.R.layout.activity_about_us);
 
-        mToolbar = (Toolbar) findViewById(com.tutee.ak47.app.R.id.about_us_toolbar);
+        mToolbar = findViewById(com.tutee.ak47.app.R.id.about_us_toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("About Us");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("About Us");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 

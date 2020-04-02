@@ -1,17 +1,16 @@
-package com.tutee.ak47.app;
+package com.tutee.ak47.app.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -21,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
             UserEmail.setError("Enter Email Id!");
         } else if (TextUtils.isEmpty(password)) {
             UserPassword.setError("Enter Password");
-        } else if (isEmail(UserEmail) == false) {
+        } else if (!isEmail(UserEmail)) {
             UserEmail.setError("Enter valid Email!");
         } else {
 
@@ -102,9 +102,9 @@ public class LoginActivity extends AppCompatActivity {
 
                             } else {
 
-                                String message = task.getException().toString();
+                                String message = Objects.requireNonNull(task.getException()).toString();
                                 loadingBar.dismiss();
-                                Toast.makeText(LoginActivity.this, "Error : " + message, Toast.LENGTH_LONG);
+                                Toast.makeText(LoginActivity.this, "Error : " + message, Toast.LENGTH_LONG).show();
                                 UserEmail.setError("Enter valid Email!");
                                 UserPassword.setError("Enter valid Password");
 
@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void sendUserToHomeActivity() {
-        Intent mainintent = new Intent(LoginActivity.this, Home.class);
+        Intent mainintent = new Intent(LoginActivity.this, MainActivity.class);
         mainintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainintent);
         finish();
@@ -143,6 +143,7 @@ public class LoginActivity extends AppCompatActivity {
     private void checkIfEmailVerified() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        assert user != null;
         if (user.isEmailVerified()) {
 
          /*   String currentUserId=mAuth.getCurrentUser().getUid();

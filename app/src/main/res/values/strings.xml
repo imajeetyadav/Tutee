@@ -1,6 +1,19 @@
 <resources>
     <string name="app_name">Tutee</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="user_Image">user Image</string>
+    <string name="user_name">User Name</string>
+    <string name="user_description">Hey there! I am using tutee</string>
+    <string name="cancel_request">Cancel Request</string>
+    <string name="version">v1.13 beta</string>
+    <string name="user_name_hint">User Name</string>
+    <string name="bio">Bio :-</string>
+    <string name="search_friend">Search</string>
+    <string name="replay">Replay !</string>
+    <string name="send_message_button">send message button</string>
+    <string name="save_profile">Save</string>
+    <string name="accept_request">Accept Request</string>
+    <string name="remove_this_contact">Remove this Contact</string>
+    <string name="send_request">Send Request</string>
+    <string name="enter_your_query">Enter Your Query</string>
+    <string name="enter_message">Enter message</string>
 </resources>

@@ -1,16 +1,10 @@
-package com.tutee.ak47.app;
+package com.tutee.ak47.app.fragment;
 
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.AlertDialog;
-
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -24,13 +18,19 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.tutee.ak47.app.R;
+import com.tutee.ak47.app.activity.GroupChatActivity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -106,7 +106,7 @@ public class GroupFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 String currentGroupName= adapterView.getItemAtPosition(position).toString();
 
-                Intent groupChatIntent= new Intent(getContext(),GroupChatActivity.class);
+                Intent groupChatIntent = new Intent(getContext(), GroupChatActivity.class);
                 groupChatIntent.putExtra("groupName",currentGroupName);
                 startActivity(groupChatIntent);
             }
@@ -143,12 +143,12 @@ public class GroupFragment extends Fragment {
 
     private void IntializeFields() {
 
-        GroupSearch=(EditText)groupFragmentView.findViewById(R.id.Search_Topic);
-        list_view=(ListView)groupFragmentView.findViewById(com.tutee.ak47.app.R.id.list_view);
+        GroupSearch = groupFragmentView.findViewById(R.id.Search_Topic);
+        list_view = groupFragmentView.findViewById(R.id.list_view);
         arrayAdapter=new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,list_of_groups);
         arrayAdapterNew=new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,list_of_groups);
         list_view.setAdapter(arrayAdapter);
-        createNewGroup=(FloatingActionButton) groupFragmentView.findViewById(com.tutee.ak47.app.R.id.create_group);
+        createNewGroup = groupFragmentView.findViewById(R.id.create_group);
 
 
 

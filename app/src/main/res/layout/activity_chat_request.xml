@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatRequestActivity">
+    tools:context=".activity.ChatRequestActivity">
     <include
         android:id="@+id/chat_request_toolbar"
-        layout="@layout/app_bar"></include>
+        layout="@layout/app_bar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chat_request_recycler_list"

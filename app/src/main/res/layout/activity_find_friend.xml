@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FindFriendActivity"
+    tools:context=".activity.FindFriendActivity"
     android:background="@color/colorPrimaryDark"
     android:focusable="true"
     android:focusableInTouchMode="true">
 
     <include
         android:id="@+id/find_friend_toolbar"
-        layout="@layout/app_bar"></include>
+        layout="@layout/app_bar" />
     <EditText
         android:layout_below="@+id/find_friend_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorPrimary"
         android:background="@color/colorPrimary"
-        android:hint="Search"
+        android:hint="@string/search_friend"
         android:textSize="20sp"
         android:layout_marginBottom="10dp"
         android:elevation="4dp"

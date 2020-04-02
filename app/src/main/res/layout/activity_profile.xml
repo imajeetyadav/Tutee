@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
+    tools:context=".activity.ProfileActivity">
     <include layout="@layout/app_bar"
-        android:id="@+id/profile_activity_toolbar"></include>
+        android:id="@+id/profile_activity_toolbar" />
 
     <View
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="User Name"
+        android:text="@string/user_name"
         android:id="@+id/visit_user_name"
         android:layout_below="@id/visit_profile_image"
         android:layout_centerInParent="true"
@@ -48,7 +48,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="5dp"
-        android:text="Hey there! I am using tutee"
+        android:text="@string/user_description"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@android:color/darker_gray"
@@ -64,7 +64,7 @@
         android:layout_marginLeft="65dp"
         android:layout_marginRight="65dp"
         android:background="@drawable/button_background"
-        android:text="Send Request"
+        android:text="@string/send_request"
         android:textColor="@color/colorAccent"
         android:textStyle="bold"
         android:textAllCaps="false"
@@ -80,7 +80,7 @@
         android:layout_marginLeft="65dp"
         android:layout_marginRight="65dp"
         android:background="@drawable/button_background"
-        android:text="Cancel Request"
+        android:text="@string/cancel_request"
         android:textColor="@color/colorAccent"
         android:textStyle="bold"
         android:textAllCaps="false"

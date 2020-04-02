@@ -1,4 +1,4 @@
-package com.tutee.ak47.app;
+package com.tutee.ak47.app.model;
 
 
 public class Groups {

@@ -1,13 +1,4 @@
-package com.tutee.ak47.app;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import de.hdodenhof.circleimageview.CircleImageView;
+package com.tutee.ak47.app.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +11,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +29,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.tutee.ak47.app.adapter.MessageAdapter;
+import com.tutee.ak47.app.model.Messages;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,6 +38,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatActivity extends AppCompatActivity {
     private String messageReceiverID,messageReceiverName,messageReceiverImage;
@@ -96,7 +99,7 @@ public class ChatActivity extends AppCompatActivity {
     private void InitializeFields() {
 
 
-        chatToolBar = (Toolbar) findViewById(com.tutee.ak47.app.R.id.chat_bar_layout);
+        chatToolBar = findViewById(com.tutee.ak47.app.R.id.chat_bar_layout);
         setSupportActionBar(chatToolBar);
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -106,11 +109,11 @@ public class ChatActivity extends AppCompatActivity {
         View actionBarView = layoutInflater.inflate(com.tutee.ak47.app.R.layout.custom_chat_bar,null);
         actionBar.setCustomView(actionBarView);
 
-        userName=(TextView)findViewById(com.tutee.ak47.app.R.id.custom_profile_name);
-        userLastSeen=(TextView)findViewById(com.tutee.ak47.app.R.id.custom_profile_last_seen);
-        userImage=(CircleImageView)findViewById(com.tutee.ak47.app.R.id.custom_profile_image);
-        sendMessageButton=(ImageButton) findViewById(com.tutee.ak47.app.R.id.send_message_button);
-        messageInput=(EditText)findViewById(com.tutee.ak47.app.R.id.input_group_message);
+        userName = findViewById(com.tutee.ak47.app.R.id.custom_profile_name);
+        userLastSeen = findViewById(com.tutee.ak47.app.R.id.custom_profile_last_seen);
+        userImage = findViewById(com.tutee.ak47.app.R.id.custom_profile_image);
+        sendMessageButton = findViewById(com.tutee.ak47.app.R.id.send_message_button);
+        messageInput = findViewById(com.tutee.ak47.app.R.id.input_group_message);
 
 
         mAuth=FirebaseAuth.getInstance();
@@ -120,7 +123,7 @@ public class ChatActivity extends AppCompatActivity {
         rootRef.child("Message").child(senderUserID).keepSynced(true);
 
         messageAdapter=new MessageAdapter(messagesList);
-        userMessagesList=(RecyclerView)findViewById(com.tutee.ak47.app.R.id.private_message_list_of_users);
+        userMessagesList = findViewById(com.tutee.ak47.app.R.id.private_message_list_of_users);
         linearLayoutManager=new LinearLayoutManager(this);
         userMessagesList.setHasFixedSize(true);
         userMessagesList.setLayoutManager(linearLayoutManager);
@@ -233,14 +236,14 @@ public class ChatActivity extends AppCompatActivity {
 
                 String messagePushID=userMessageKeyRef.getKey();
 
-                Map messageTextBody=new HashMap();
+                Map<String, String> messageTextBody = new HashMap<>();
                 messageTextBody.put("message",messageText);
                 messageTextBody.put("type","text");
                 messageTextBody.put("from",senderUserID);
                 messageTextBody.put("date",currentDate);
                 messageTextBody.put("time",currentTime);
 
-                Map messageBodyDetails=new HashMap();
+                Map<String, Object> messageBodyDetails = new HashMap<String, Object>();
                 messageBodyDetails.put(messageSenderRef+"/"+messagePushID,messageTextBody);
                 messageBodyDetails.put(messageReceiverRef+"/"+messagePushID,messageTextBody);
 

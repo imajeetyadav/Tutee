@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GroupChatActivity">
+    tools:context=".activity.GroupChatActivity">
 
     <include
         android:id="@+id/group_chat_bar_layout"
@@ -45,7 +45,7 @@
 
         <EditText
             android:id="@+id/input_group_message"
-            android:hint="Enter Your Query"
+            android:hint="@string/enter_your_query"
             android:background="@android:color/transparent"
             android:layout_gravity="center"
             android:layout_marginLeft="16dp"
@@ -61,6 +61,7 @@
             android:layout_height="48dp"
             android:src="@android:drawable/ic_menu_send"
             android:gravity="center"
+            android:contentDescription="@string/send_message_button"
             android:layout_gravity="bottom"/>
 
 

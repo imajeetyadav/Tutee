@@ -1,4 +1,4 @@
-package com.tutee.ak47.app;
+package com.tutee.ak47.app.application;
 
 import android.app.Application;
 

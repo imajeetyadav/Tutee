@@ -1,12 +1,7 @@
-package com.tutee.ak47.app;
+package com.tutee.ak47.app.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,6 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,7 +35,6 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import androidx.appcompat.widget.Toolbar;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SettingActivity extends AppCompatActivity {
@@ -78,14 +77,6 @@ public class SettingActivity extends AppCompatActivity {
         });
         RetriveUserInfo();
 
-        numberStatus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent verificationActivity = new Intent(SettingActivity.this, phoneVerification.class);
-                verificationActivity.putExtra("P_number", sendNumber);
-                startActivity(verificationActivity);
-            }
-        });
 
         userProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,14 +92,14 @@ public class SettingActivity extends AppCompatActivity {
 
 
     private void Initialization() {
-        UpdateAccountSettings = (Button) findViewById(com.tutee.ak47.app.R.id.save_profile);
-        userName = (EditText) findViewById(com.tutee.ak47.app.R.id.profile_user_name);
-        userBio = (EditText) findViewById(com.tutee.ak47.app.R.id.profile_user_bio);
-        userProfileImage = (CircleImageView) findViewById(com.tutee.ak47.app.R.id.set_profile_image);
-        numberStatus = (Button) findViewById(com.tutee.ak47.app.R.id.number_Verification);
+        UpdateAccountSettings = findViewById(com.tutee.ak47.app.R.id.save_profile);
+        userName = findViewById(com.tutee.ak47.app.R.id.profile_user_name);
+        userBio = findViewById(com.tutee.ak47.app.R.id.profile_user_bio);
+        userProfileImage = findViewById(com.tutee.ak47.app.R.id.set_profile_image);
+        numberStatus = findViewById(com.tutee.ak47.app.R.id.number_Verification);
         loadingBar = new ProgressDialog(this);
 
-        mToolbar = (Toolbar) findViewById(com.tutee.ak47.app.R.id.setting_toolbar);
+        mToolbar = findViewById(com.tutee.ak47.app.R.id.setting_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Settings");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
